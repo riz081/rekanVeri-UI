@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Dashboard from './pages/Dashboard';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarVisible(!isSidebarVisible);
+    };
+
+    return (
+        <div className="wrapper">
+            <Sidebar isSidebarVisible={isSidebarVisible} />
+            <div className="main">
+                <Navbar toggleSidebar={toggleSidebar} />
+                <main className="content">
+                    <div className="container-fluid p-0">
+                        <Dashboard />
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        </div>
+    );
 }
 
 export default App;
