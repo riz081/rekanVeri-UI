@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import feather from 'feather-icons';
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar({ isSidebarVisible }) {
+    const location = useLocation(); // Get current path
+
     useEffect(() => {
         if (isSidebarVisible) {
             feather.replace();
@@ -11,60 +14,62 @@ function Sidebar({ isSidebarVisible }) {
     const sidebarStyle = {
         backgroundColor: '#ffffff',
         color: '#000000',
-        height: '100vh', // Full height of viewport
-        overflow: 'hidden', // Prevent scrolling
+        height: '100vh',
+        overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         position: 'fixed',
-        width: '250px', // Set a fixed width for the sidebar
-        left: 0, // Align to the left
+        width: '250px',
+        left: 0,
         top: 0,
-        zIndex: 1000, // Ensure it stays above other content
+        zIndex: 1000,
     };
 
     const contentStyle = {
         overflowY: 'auto',
         flexGrow: 1,
-        paddingLeft: '15px', // Adjust padding to prevent overlap with sidebar
+        paddingLeft: '15px',
     };
 
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
-    const menuItemStyle = (isHovered) => ({
-        color: isHovered ? '#ffffff' : '#000000',
-        backgroundColor: isHovered ? '#0542CC' : 'transparent',
+    const menuItems = [
+        { href: '/', icon: 'sliders', text: 'Dashboard' },
+        { href: '/profile', icon: 'user', text: 'Profile' },
+        { href: '/signin', icon: 'log-in', text: 'Sign In' },
+        { href: '/signup', icon: 'user-plus', text: 'Sign Up' },
+        { href: '/blank', icon: 'book', text: 'Blank' },
+        { href: '/buttons', icon: 'square', text: 'Buttons' },
+        { href: '/forms', icon: 'check-square', text: 'Forms' },
+        { href: '/cards', icon: 'grid', text: 'Cards' },
+        { href: '/typography', icon: 'align-left', text: 'Typography' },
+        { href: '/icons', icon: 'coffee', text: 'Icons' },
+        { href: '/charts', icon: 'bar-chart-2', text: 'Charts' },
+        { href: '/maps', icon: 'map', text: 'Maps' },
+    ];
+
+    const isActive = (href) => location.pathname === href; // Check if the link is active
+
+    const menuItemStyle = (isHovered, active) => ({
+        color: active ? '#ffffff' : isHovered ? '#ffffff' : '#000000',
+        backgroundColor: active ? '#0542CC' : isHovered ? '#0542CC' : 'transparent',
         padding: '10px',
         borderRadius: '5px',
     });
 
-    const iconStyle = (isHovered) => ({
-        color: isHovered ? '#ffffff' : '#000000',
+    const iconStyle = (isHovered, active) => ({
+        color: active ? '#ffffff' : isHovered ? '#ffffff' : '#000000',
         marginRight: '10px',
     });
-
-    const menuItems = [
-        { href: 'index.html', icon: 'sliders', text: 'Dashboard' },
-        { href: 'pages-profile.html', icon: 'user', text: 'Profile' },
-        { href: 'pages-sign-in.html', icon: 'log-in', text: 'Sign In' },
-        { href: 'pages-sign-up.html', icon: 'user-plus', text: 'Sign Up' },
-        { href: 'pages-blank.html', icon: 'book', text: 'Blank' },
-        { href: 'ui-buttons.html', icon: 'square', text: 'Buttons' },
-        { href: 'ui-forms.html', icon: 'check-square', text: 'Forms' },
-        { href: 'ui-cards.html', icon: 'grid', text: 'Cards' },
-        { href: 'ui-typography.html', icon: 'align-left', text: 'Typography' },
-        { href: 'icons-feather.html', icon: 'coffee', text: 'Icons' },
-        { href: 'charts-chartjs.html', icon: 'bar-chart-2', text: 'Charts' },
-        { href: 'maps-google.html', icon: 'map', text: 'Maps' },
-    ];
 
     return (
         <>
             {isSidebarVisible && (
                 <nav id="sidebar" className="sidebar js-sidebar" style={sidebarStyle}>
                     <div className="sidebar-content js-simplebar" style={{ flexGrow: 1 }}>
-                        <a className="sidebar-brand" href="index.html" style={menuItemStyle(false)}>
+                        <Link className="sidebar-brand" to="/" style={menuItemStyle(false, false)}>
                             <span className="align-middle">AdminKit</span>
-                        </a>
+                        </Link>
 
                         <ul className="sidebar-nav">
                             {menuItems.map((item, index) => (
@@ -74,24 +79,24 @@ function Sidebar({ isSidebarVisible }) {
                                     onMouseEnter={() => setHoveredIndex(index)}
                                     onMouseLeave={() => setHoveredIndex(null)}
                                 >
-                                    <a
+                                    <Link
                                         className="sidebar-link"
-                                        href={item.href}
-                                        style={menuItemStyle(hoveredIndex === index)}
+                                        to={item.href}
+                                        style={menuItemStyle(hoveredIndex === index, isActive(item.href))}
                                     >
                                         <i
                                             className="align-middle"
                                             data-feather={item.icon}
-                                            style={iconStyle(hoveredIndex === index)}
+                                            style={iconStyle(hoveredIndex === index, isActive(item.href))}
                                         ></i>
                                         <span className="align-middle">{item.text}</span>
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
 
                         <div className="sidebar-cta">
-                            <div className="sidebar-cta-content" style={menuItemStyle(false)}>
+                            <div className="sidebar-cta-content" style={menuItemStyle(false, false)}>
                                 <strong className="d-inline-block mb-2">Upgrade to Pro</strong>
                                 <div className="mb-3 text-sm">
                                     Are you looking for more components? Check out our premium version.
@@ -109,3 +114,4 @@ function Sidebar({ isSidebarVisible }) {
 }
 
 export default Sidebar;
+    
