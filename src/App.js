@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Dashboard from './pages/Dashboard';
+import Sidebar from './pages/Sidebar';
+import Navbar from './pages/Navbar';
+import Footer from './pages/Footer';
+import Dashboard from './screens/Dashboard';
 
 function App() {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -21,11 +21,13 @@ function App() {
                     <main className="content">
                         <div className="container-fluid p-0">
                             <Routes>
-                                <Route path="/" element={<Dashboard />} />
+                                <Route path="/getting-started" element={<Dashboard />} />
+                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/application" element={<Dashboard />} />
                             </Routes>
                         </div>
                     </main>
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
             </div>
         </Router>
