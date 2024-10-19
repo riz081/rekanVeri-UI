@@ -3,31 +3,43 @@ import feather from 'feather-icons';
 
 function Sidebar({ isSidebarVisible }) {
     useEffect(() => {
-        // Initialize Feather Icons only if the sidebar is visible
         if (isSidebarVisible) {
             feather.replace();
         }
     }, [isSidebarVisible]);
 
-    // Inline style for the sidebar
     const sidebarStyle = {
-        backgroundColor: '#ffffff', // White background
+        backgroundColor: '#ffffff',
         color: '#000000',
+        height: '100vh', // Full height of viewport
+        overflow: 'hidden', // Prevent scrolling
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'fixed',
+        width: '250px', // Set a fixed width for the sidebar
+        left: 0, // Align to the left
+        top: 0,
+        zIndex: 1000, // Ensure it stays above other content
     };
 
-    // Function to handle hover
+    const contentStyle = {
+        overflowY: 'auto',
+        flexGrow: 1,
+        paddingLeft: '15px', // Adjust padding to prevent overlap with sidebar
+    };
+
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const menuItemStyle = (isHovered) => ({
-        color: isHovered ? '#ffffff' : '#000000', // Change text color on hover
-        backgroundColor: isHovered ? '#0542CC' : 'transparent', // Background change on hover
+        color: isHovered ? '#ffffff' : '#000000',
+        backgroundColor: isHovered ? '#0542CC' : 'transparent',
         padding: '10px',
-        borderRadius: '5px', // Smooth button-like effect
+        borderRadius: '5px',
     });
 
     const iconStyle = (isHovered) => ({
         color: isHovered ? '#ffffff' : '#000000',
-        marginRight: '10px', // Space between icon and text
+        marginRight: '10px',
     });
 
     const menuItems = [
@@ -49,7 +61,7 @@ function Sidebar({ isSidebarVisible }) {
         <>
             {isSidebarVisible && (
                 <nav id="sidebar" className="sidebar js-sidebar" style={sidebarStyle}>
-                    <div className="sidebar-content js-simplebar">
+                    <div className="sidebar-content js-simplebar" style={{ flexGrow: 1 }}>
                         <a className="sidebar-brand" href="index.html" style={menuItemStyle(false)}>
                             <span className="align-middle">AdminKit</span>
                         </a>
@@ -59,8 +71,8 @@ function Sidebar({ isSidebarVisible }) {
                                 <li
                                     key={index}
                                     className="sidebar-item"
-                                    onMouseEnter={() => setHoveredIndex(index)} // Change state on hover
-                                    onMouseLeave={() => setHoveredIndex(null)} // Reset state after hover
+                                    onMouseEnter={() => setHoveredIndex(index)}
+                                    onMouseLeave={() => setHoveredIndex(null)}
                                 >
                                     <a
                                         className="sidebar-link"
@@ -70,7 +82,7 @@ function Sidebar({ isSidebarVisible }) {
                                         <i
                                             className="align-middle"
                                             data-feather={item.icon}
-                                            style={iconStyle(hoveredIndex === index)} // Apply hover style to icon
+                                            style={iconStyle(hoveredIndex === index)}
                                         ></i>
                                         <span className="align-middle">{item.text}</span>
                                     </a>

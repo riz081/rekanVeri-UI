@@ -12,9 +12,9 @@ function App() {
     };
 
     return (
-        <div className="wrapper">
+        <div className="wrapper" style={{ display: 'flex', minHeight: '100vh' }}>
             <Sidebar isSidebarVisible={isSidebarVisible} />
-            <div className="main">
+            <div className="main" style={{ marginLeft: isSidebarVisible ? '250px' : '0', transition: 'margin-left 0.3s' }}>
                 <Navbar toggleSidebar={toggleSidebar} />
                 <main className="content">
                     <div className="container-fluid p-0">
