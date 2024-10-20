@@ -1,6 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Applications = () => {
+  const data = [
+    {
+      title: 'HEMAT-SOLUTION',
+      applicationId: 'adb60223-d555-46b0-ab12-af4d582fff69',
+      dateTime: '26 Jun 2024 14:28:52 GMT+0700',
+    },
+    {
+      title: 'HEMAT-SOLUTION',
+      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
+      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
+    },
+  ];
+
+  const [buttonStates, setButtonStates] = useState(data.map(() => ({ isHovered: false, isActive: false })));
+
+  const handleMouseEnter = (index) => {
+    setButtonStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index].isHovered = true;
+      return newStates;
+    });
+  };
+
+  const handleMouseLeave = (index) => {
+    setButtonStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index].isHovered = false;
+      return newStates;
+    });
+  };
+
+  const handleMouseDown = (index) => {
+    setButtonStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index].isActive = true;
+      return newStates;
+    });
+  };
+
+  const handleMouseUp = (index) => {
+    setButtonStates((prevStates) => {
+      const newStates = [...prevStates];
+      newStates[index].isActive = false;
+      return newStates;
+    });
+  };
+
   const containerStyle = {
     padding: '20px',
     maxWidth: '1200px',
@@ -12,15 +59,15 @@ const Applications = () => {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginBottom: '20px'
+    marginBottom: '20px',
   };
-  
+
   const h2Style = {
     color: '#0542cc',
     fontWeight: '600',
-    margin: '10px 0'
+    margin: '10px 0',
   };
-  
+
   const searchInputWrapperStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -29,7 +76,7 @@ const Applications = () => {
     borderRadius: '5px',
     border: '1px solid #ced4ca',
   };
-  
+
   const searchInputStyle = {
     width: '100%',
     padding: '10px',
@@ -37,15 +84,15 @@ const Applications = () => {
     outline: 'none',
     borderRadius: '3px 0 0 3px',
   };
-  
+
   const searchButtonStyle = {
     backgroundColor: '#0542cc',
     border: 'none',
     borderRadius: '0 3px 3px 0',
-    padding: '10px 13px 10px 13px',
+    padding: '10px 13px',
     cursor: 'pointer',
   };
-  
+
   const searchIconStyle = {
     color: '#fff',
     fontSize: '20px',
@@ -58,7 +105,7 @@ const Applications = () => {
     boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
     padding: '10px',
   };
-  
+
   const buttonStyle = {
     padding: '10px 20px',
     backgroundColor: '#0542cc',
@@ -69,13 +116,12 @@ const Applications = () => {
     display: 'flex',
     alignItems: 'center',
     gap: '5px',
-    margin: '2% 0 1.7% 0'
+    margin: '2% 0 1.7% 0',
   };
 
   const cardContainerStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    flexDirection: 'column',
+    gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '20px',
   };
 
@@ -94,70 +140,40 @@ const Applications = () => {
   };
 
   const cardTitleStyle = {
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontSize: '18px',
+    color: '#000',
+  };
+
+  const cardContentStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+    margin: '10px 0',
+  };
+
+  const applicationIdWrapperStyle = {
+    display: 'flex',
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    border: '1px solid #ced4ca',
+    borderRadius: '5px 0 0 5px',
+    padding: '15px 0 0 10px',
+    gap: '5px',
+    lineHeight: '1.2',
   };
 
   const copyButtonStyle = {
     padding: '5px 10px',
-    backgroundColor: '#007BFF',
     color: '#fff',
     border: 'none',
-    borderRadius: '5px',
+    borderRadius: '0 5px 5px 0',
     cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    height: '6.3vh',
+    width: '10vh',
   };
-
-  const cardContentStyle = {
-    marginBottom: '5px',
-  };
-
-  const data = [
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'adb60223-d555-46b0-ab12-af4d582fff69',
-      dateTime: '26 Jun 2024 14:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-    {
-      title: 'HEMAT-SOLUTION',
-      applicationId: 'e1234567-d555-46b0-ab12-af4d582fff70',
-      dateTime: '27 Jun 2024 15:28:52 GMT+0700',
-    },
-  ];
 
 
   return (
@@ -175,22 +191,44 @@ const Applications = () => {
           </button>
         </div>
       </div>
-      
+
       <div style={wrapperCardStyle}>
         <button style={buttonStyle}>
           <i className="fas fa-plus"></i>
-            Create New App ID
+          Create New App ID
         </button>
         <div style={cardContainerStyle}>
           {data.map((item, index) => (
             <div key={index} style={cardStyle}>
               <div style={cardHeaderStyle}>
                 <span style={cardTitleStyle}>{item.title}</span>
-                <button style={copyButtonStyle}>Copy</button>
               </div>
               <div style={cardContentStyle}>
-                <p><strong>Application ID:</strong> {item.applicationId}</p>
-                <p><strong>Date & Time:</strong> {item.dateTime}</p>
+                <div style={applicationIdWrapperStyle}>
+                  <p><strong>Application ID:</strong></p>
+                  <p>{item.applicationId}</p>
+                </div>
+                <button
+                  style={{
+                    ...copyButtonStyle,
+                    backgroundColor: buttonStates[index].isActive
+                      ? '#4BA5E7'
+                      : buttonStates[index].isHovered
+                      ? '#1A6FD9'
+                      : '#0542cc',
+                  }}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={() => handleMouseLeave(index)}
+                  onMouseDown={() => handleMouseDown(index)}
+                  onMouseUp={() => handleMouseUp(index)}
+                >
+                  Copy
+                </button>
+              </div>
+              <div style={cardContentStyle}>
+                <div style={applicationIdWrapperStyle}>
+                  <p><strong>Date & Time:</strong> {item.dateTime}</p>
+                </div>
               </div>
             </div>
           ))}
