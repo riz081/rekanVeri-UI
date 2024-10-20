@@ -12,9 +12,11 @@ import {
     faList, 
     faFile,
 } from '@fortawesome/free-solid-svg-icons';
-import Logo from '../assets/img/Logo.png'
-import ProfileImage from '../assets/img/Profile.jpeg'
 import SearchBar from '../components/SearchBar';
+import {
+    ProfileImage,
+    Logo
+} from '../assets/img';
 
 function Sidebar({ isSidebarVisible }) {
     const location = useLocation();
@@ -37,11 +39,11 @@ function Sidebar({ isSidebarVisible }) {
 
     const menuItems = [
         {
-            href: '/getting-started',
+            href: '/started',
             icon: 'tachometer',
             text: 'Home',
             subItems: [
-                { href: '/getting-started', text: 'Getting Started' },
+                { href: '/started', text: 'Getting Started' },
                 { href: '/dashboard', text: 'Dashboard' },
                 { href: '/application', text: 'Application' },
             ],

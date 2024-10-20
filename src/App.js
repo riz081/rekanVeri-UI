@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Sidebar from './pages/Sidebar';
 import Navbar from './pages/Navbar';
 import Footer from './pages/Footer';
-import Dashboard from './screens/Dashboard';
+import { Applications, Dashboard, Started } from './screens/Home';
 
 function App() {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -21,9 +21,9 @@ function App() {
                     <main className="content">
                         <div className="container-fluid p-0">
                             <Routes>
-                                <Route path="/getting-started" element={<Dashboard />} />
+                                <Route path="/started" element={<Started />} />
                                 <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/application" element={<Dashboard />} />
+                                <Route path="/application" element={<Applications />} />
                             </Routes>
                         </div>
                     </main>

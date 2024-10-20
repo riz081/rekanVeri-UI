@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Dashboard() {
+function Started() {
   const cardData = [
     {
       title: "Watchlist Screening",
@@ -102,4 +102,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Started;
