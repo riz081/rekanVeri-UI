@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import {
+  CreateApps
+} from '../../pages/Create';
+import { Link } from 'react-router-dom';
 
 const Applications = () => {
   const data = [
@@ -193,10 +197,12 @@ const Applications = () => {
       </div>
 
       <div style={wrapperCardStyle}>
-        <button style={buttonStyle}>
-          <i className="fas fa-plus"></i>
-          Create New App ID
-        </button>
+        <Link to="/createApps" style={{ textDecoration: 'none' }}>
+          <button style={buttonStyle}>
+            <i className="fas fa-plus"></i>
+            Create New App ID
+          </button>
+        </Link>
         <div style={cardContainerStyle}>
           {data.map((item, index) => (
             <div key={index} style={cardStyle}>

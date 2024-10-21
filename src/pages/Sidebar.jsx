@@ -93,7 +93,8 @@ function Sidebar({ isSidebarVisible }) {
         },
     ];
 
-    const isActive = (href) => location.pathname === href;
+    const isActive = (href) => location.pathname === href || 
+        (href === '/application' && location.pathname === '/createApps');
     const toggleDropdown = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
     };
