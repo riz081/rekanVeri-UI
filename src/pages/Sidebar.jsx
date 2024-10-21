@@ -278,6 +278,12 @@ function Sidebar({ isSidebarVisible }) {
                                                             <Link className="sidebar-link" to={subItem.href} style={subMenuItemStyle(isSubItemActive)}>
                                                                 {subItem.text}
                                                             </Link>
+                                                            {subItem.subItems && subItem.subItems.length > 0 && (
+                                                                <FontAwesomeIcon 
+                                                                    icon={deepExpandedIndex === `${index}-${subIndex}` ? faChevronDown : faChevronLeft}
+                                                                    style={{ marginLeft: 'auto', marginRight: '3vh' }}
+                                                                />
+                                                            )}
                                                         </div>
                                                         {/* Deep Sub Menu Item */}
                                                         {deepExpandedIndex === `${index}-${subIndex}` && subItem.subItems?.length > 0 && (
@@ -286,6 +292,14 @@ function Sidebar({ isSidebarVisible }) {
                                                                     const isDeepSubItemActive = isActive(deepSubItem.href);
                                                                     return (
                                                                         <li key={deepSubIndex} className="sidebar-deep-subitem" style={{ display: 'flex', alignItems: 'center' }}>
+                                                                            <div style={{
+                                                                                width: '10px',
+                                                                                height: '10px',
+                                                                                borderRadius: '50%',
+                                                                                border: isDeepSubItemActive ? '2px solid #0542CC' : '2px solid #38453D',
+                                                                                backgroundColor: isDeepSubItemActive ? '#ffffff' : 'transparent',
+                                                                                marginRight: '10px',
+                                                                            }}></div>
                                                                             <Link className="sidebar-link" to={deepSubItem.href} style={subMenuItemStyle(isDeepSubItemActive)}>
                                                                                 {deepSubItem.text}
                                                                             </Link>
