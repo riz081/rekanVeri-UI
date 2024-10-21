@@ -21,6 +21,7 @@ import {
 function Sidebar({ isSidebarVisible }) {
     const location = useLocation();
     const [expandedIndex, setExpandedIndex] = useState(null);
+    const [deepExpandedIndex, setDeepExpandedIndex] = useState(null);
 
     useEffect(() => {
         if (isSidebarVisible) {
@@ -49,22 +50,46 @@ function Sidebar({ isSidebarVisible }) {
             ],
         },
         {
-            href: '/face-recognition',
+            href: '/faceRecognition',
             icon: 'user',
             text: 'Biometric',
             subItems: [
                 {
-                    href: '/face-recognition',
+                    href: '/faceRecognition',
                     text: 'Face Recognition',
                     subItems: [
-                        { href: '/face-recognition/demo', text: 'Demo' },
-                        { href: '/face-recognition/summary', text: 'Summary' },
-                        { href: '/face-recognition/transaction', text: 'Transaction' },
+                        { href: '/faceRecognition/demo', text: 'Demo' },
+                        { href: '/faceRecognition/summary', text: 'Summary' },
+                        { href: '/faceRecognition/transaction', text: 'Transaction' },
                     ],
                 },
-                { href: '/ocr-ktp', text: 'OCR KTP' },
-                { href: '/ocr-npwp', text: 'OCR NPWP' },
-                { href: '/ocr-sim', text: 'OCR SIM' },
+                { 
+                    href: '/ocrKtp', 
+                    text: 'OCR KTP',
+                    subItems: [
+                        { href: '/ocrKtp/demo', text: 'Demo' },
+                        { href: '/ocrKtp/summary', text: 'Summary' },
+                        { href: '/ocrKtp/transaction', text: 'Transaction' },
+                    ],
+                },
+                { 
+                    href: '/ocrNpwp', 
+                    text: 'OCR NPWP',
+                    subItems: [
+                        { href: '/ocrNpwp/demo', text: 'Demo' },
+                        { href: '/ocrNpwp/summary', text: 'Summary' },
+                        { href: '/ocrNpwp/transaction', text: 'Transaction' },
+                    ],
+                },
+                { 
+                    href: '/ocrSim', 
+                    text: 'OCR SIM',
+                    subItems: [
+                        { href: '/ocrSim/demo', text: 'Demo' },
+                        { href: '/ocrSim/summary', text: 'Summary' },
+                        { href: '/ocrSim/transaction', text: 'Transaction' },
+                    ],
+                },
             ],
         },
         {
@@ -97,6 +122,9 @@ function Sidebar({ isSidebarVisible }) {
         (href === '/application' && location.pathname === '/createApps');
     const toggleDropdown = (index) => {
         setExpandedIndex(expandedIndex === index ? null : index);
+    };
+    const toggleDeepDropdown = (itemIndex, subItemIndex) => {
+        setDeepExpandedIndex(deepExpandedIndex === `${itemIndex}-${subItemIndex}` ? null : `${itemIndex}-${subItemIndex}`);
     };
     
     const sidebarStyle = {
@@ -131,17 +159,6 @@ function Sidebar({ isSidebarVisible }) {
         display: 'flex',
         alignItems: 'center',
         fontWeight: active ? '600' : 'normal',
-    });
-    
-    const deeperSubMenuItemStyle = (active) => ({
-        color: active ? '#0542CC' : '#000000',
-        backgroundColor: 'transparent',
-        padding: '8px 15px',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        fontSize: '14px',
     });
     
     const sidebarBrandStyle = {
@@ -215,6 +232,7 @@ function Sidebar({ isSidebarVisible }) {
                     <SearchBar />
 
                     <ul className="sidebar-nav">
+                        {/* Menu Item */}
                         {menuItems.map((item, index) => {
                             const isItemActive = isActive(item.href) || item.subItems.some(subItem =>
                                 isActive(subItem.href) || subItem.subItems?.some(deepSubItem => isActive(deepSubItem.href))
@@ -241,45 +259,47 @@ function Sidebar({ isSidebarVisible }) {
                                             />
                                         )}
                                     </div>
+                                    {/* Sub Menu Item */}
                                     {expandedIndex === index && item.subItems.length > 0 && (
                                         <ul className="sidebar-dropdown" style={{ marginLeft: '20px' }}>
                                             {item.subItems.map((subItem, subIndex) => {
                                                 const isSubItemActive = isActive(subItem.href) || subItem.subItems?.some(deepSubItem => isActive(deepSubItem.href));
                                                 return (
-                                                    <li key={subIndex} className="sidebar-subitem" style={{ display: 'flex', alignItems: 'center' }}>
-                                                        <div style={{
-                                                            width: '10px',
-                                                            height: '10px',
-                                                            borderRadius: '50%',
-                                                            border: isSubItemActive ? 'none' : '2px solid #0542CC',
-                                                            backgroundColor: isSubItemActive ? '#0542CC' : 'transparent',
-                                                            marginRight: '10px',
-                                                        }}></div>
-                                                        <Link className="sidebar-link" to={subItem.href} style={subMenuItemStyle(isSubItemActive)}>
-                                                            {subItem.text}
-                                                        </Link>
-                                                        {/* {subItem.subItems && subItem.subItems.length > 0 && (
-                                                            <ul className="sidebar-dropdown" style={{ marginLeft: '20px' }}>
+                                                    <li key={subIndex} className="sidebar-subitem" style={{ display: 'flex', flexDirection: 'column' }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                            <div style={{
+                                                                width: '10px',
+                                                                height: '10px',
+                                                                borderRadius: '50%',
+                                                                border: isSubItemActive ? 'none' : '2px solid #0542CC',
+                                                                backgroundColor: isSubItemActive ? '#0542CC' : 'transparent',
+                                                                marginRight: '10px',
+                                                            }}></div>
+                                                            <div style={subMenuItemStyle(isSubItemActive)} onClick={() => toggleDeepDropdown(index, subIndex)}>
+                                                                {subItem.text}
+                                                                {subItem.subItems && subItem.subItems.length > 0 && (
+                                                                    <FontAwesomeIcon 
+                                                                        icon={deepExpandedIndex === `${index}-${subIndex}` ? faChevronDown : faChevronLeft}
+                                                                        style={{ marginLeft: 'auto' }}
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        {/* Deep Sub Menu Item */}
+                                                        {deepExpandedIndex === `${index}-${subIndex}` && subItem.subItems?.length > 0 && (
+                                                            <ul className="deep-sidebar-dropdown" style={{ marginLeft: '20px' }}>
                                                                 {subItem.subItems.map((deepSubItem, deepSubIndex) => {
                                                                     const isDeepSubItemActive = isActive(deepSubItem.href);
                                                                     return (
-                                                                        <li key={deepSubIndex} className="sidebar-subitem" style={{ display: 'flex', alignItems: 'center' }}>
-                                                                            <div style={{
-                                                                                width: '10px',
-                                                                                height: '10px',
-                                                                                borderRadius: '50%',
-                                                                                border: isDeepSubItemActive ? 'none' : '2px solid #0542CC',
-                                                                                backgroundColor: isDeepSubItemActive ? '#0542CC' : 'transparent',
-                                                                                marginRight: '10px',
-                                                                            }}></div>
-                                                                            <Link className="sidebar-link" to={deepSubItem.href} style={deeperSubMenuItemStyle(isDeepSubItemActive)}>
+                                                                        <li key={deepSubIndex} className="sidebar-deep-subitem" style={{ display: 'flex', alignItems: 'center' }}>
+                                                                            <Link className="sidebar-link" to={deepSubItem.href} style={subMenuItemStyle(isDeepSubItemActive)}>
                                                                                 {deepSubItem.text}
                                                                             </Link>
                                                                         </li>
                                                                     );
                                                                 })}
                                                             </ul>
-                                                        )} */}
+                                                        )}
                                                     </li>
                                                 );
                                             })}
