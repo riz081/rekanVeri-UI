@@ -266,7 +266,7 @@ function Sidebar({ isSidebarVisible }) {
                                                 const isSubItemActive = isActive(subItem.href) || subItem.subItems?.some(deepSubItem => isActive(deepSubItem.href));
                                                 return (
                                                     <li key={subIndex} className="sidebar-subitem" style={{ display: 'flex', flexDirection: 'column' }}>
-                                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center' }} onClick={() => toggleDeepDropdown(index, subIndex)}>
                                                             <div style={{
                                                                 width: '10px',
                                                                 height: '10px',
@@ -275,15 +275,9 @@ function Sidebar({ isSidebarVisible }) {
                                                                 backgroundColor: isSubItemActive ? '#0542CC' : 'transparent',
                                                                 marginRight: '10px',
                                                             }}></div>
-                                                            <div style={subMenuItemStyle(isSubItemActive)} onClick={() => toggleDeepDropdown(index, subIndex)}>
+                                                            <Link className="sidebar-link" to={subItem.href} style={subMenuItemStyle(isSubItemActive)}>
                                                                 {subItem.text}
-                                                                {subItem.subItems && subItem.subItems.length > 0 && (
-                                                                    <FontAwesomeIcon 
-                                                                        icon={deepExpandedIndex === `${index}-${subIndex}` ? faChevronDown : faChevronLeft}
-                                                                        style={{ marginLeft: 'auto' }}
-                                                                    />
-                                                                )}
-                                                            </div>
+                                                            </Link>
                                                         </div>
                                                         {/* Deep Sub Menu Item */}
                                                         {deepExpandedIndex === `${index}-${subIndex}` && subItem.subItems?.length > 0 && (
